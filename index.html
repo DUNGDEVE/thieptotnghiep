@@ -88,6 +88,10 @@ body{min-height:100vh;background:#1a2218;display:flex;align-items:center;justify
 .rsvp-btn{display:flex;align-items:center;gap:8px;padding:12px 22px;border-radius:2px;font-family:"Cormorant Garamond",serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .3s;}
 .rsvp-yes{background:linear-gradient(135deg,#2d4a2d,#1a2218);color:#c9a020;border:.5px solid #c9a020;}
 .rsvp-no{background:linear-gradient(135deg,#3a2000,#2e1800);color:#c9a020;border:.5px solid rgba(201,160,32,.4);}
+
+.rsvp-input{width:100%;padding:10px 14px;border:.5px solid #c9a02088;border-radius:2px;font-family:"Cormorant Garamond",serif;font-size:15px;color:#2e1800;background:#fdf8ee;margin-bottom:14px;outline:none;text-align:center;letter-spacing:.5px;}
+.rsvp-input:focus{border-color:#c9a020;box-shadow:0 0 0 2px rgba(201,160,32,.15);}
+.rsvp-input::placeholder{color:#b8942a;font-style:italic;}
 .rsvp-result{margin-top:14px;font-size:15px;font-style:italic;min-height:24px;}
 /* footer */
 .footer{margin-top:24px;}
@@ -199,6 +203,7 @@ body{min-height:100vh;background:#1a2218;display:flex;align-items:center;justify
           <div class="section-hdr">◆ &nbsp; Xác Nhận Tham Dự &nbsp; ◆</div>
           <div class="rsvp-body">
             <p class="rsvp-desc">Bạn có thể tham dự lễ tốt nghiệp không? Hãy cho mình biết nhé! 🎓</p>
+            <input class="rsvp-input" id="rsvp-name" type="text" placeholder="Tên của bạn là..."/>
             <div class="rsvp-btns">
               <button class="rsvp-btn rsvp-yes" onclick="rsvp(1)">✓ Mình sẽ đến! 🎉</button>
               <button class="rsvp-btn rsvp-no" onclick="rsvp(0)">✕ Rất tiếc, mình bận 😢</button>
@@ -267,11 +272,21 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=20.9653&longitude=105.783
 .catch(function(){document.getElementById('wb').innerHTML='<div style="text-align:center;padding:16px;color:#9a7020;font-style:italic;font-size:13px;">Khong the tai thoi tiet.</div>';});
 
 function rsvp(yes){
+  var nameEl=document.getElementById('rsvp-name');
+  var name=nameEl?nameEl.value.trim():'';
+  if(!name){
+    nameEl.style.borderColor='#c9a020';
+    nameEl.style.boxShadow='0 0 0 2px rgba(201,160,32,.3)';
+    nameEl.placeholder='Vui long nhap ten cua ban!';
+    nameEl.focus();
+    return;
+  }
   document.querySelectorAll('.rsvp-btn').forEach(function(b){b.disabled=true;b.style.opacity='.6';});
+  if(nameEl)nameEl.disabled=true;
   var r=document.getElementById('rr');
-  if(yes){r.innerHTML='&#127881; Cam on ban rat nhieu! Minh se doi ban tai le! &#128155;';r.style.color='#2d4a2d';fw();}
-  else{r.innerHTML='&#128546; Rat tiec khi ban khong den duoc. Chuc ban moi dieu tot lanh! &#128155;';r.style.color='#5a3000';}
-  fetch('https://formspree.io/f/xjgllwlj',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({tham_du:yes?'Co':'Khong'})}).catch(function(){});
+  if(yes){r.innerHTML='&#127881; Cam on <strong>'+name+'</strong>! Minh se doi ban tai le! &#128155;';r.style.color='#2d4a2d';fw();}
+  else{r.innerHTML='&#128546; Rat tiec khi <strong>'+name+'</strong> khong den duoc. Chuc ban moi dieu tot lanh! &#128155;';r.style.color='#5a3000';}
+  fetch('https://formspree.io/f/xjgllwlj',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({ten:name,tham_du:yes?'Co':'Khong',thoi_gian:new Date().toLocaleString('vi-VN')})}).catch(function(){});
 }
 
 function fw(){
