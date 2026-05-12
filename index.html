@@ -747,52 +747,9 @@
               <span>◆ &nbsp; Thời Tiết &nbsp; ◆</span>
               <span class="wdate">17 / 05 / 2026</span>
             </div>
-            <div class="weather-body">
-              <div class="weather-main">
-                <!-- Storm cloud SVG icon -->
-                <svg class="weather-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M34 28c3.3 0 6-2.7 6-6s-2.7-6-6-6c-.4 0-.8 0-1.2.1C31.5 13.2 28.5 11 25 11c-4.4 0-8 3.6-8 8 0 .3 0 .6.1.9C14.7 20.5 13 22.6 13 25c0 3.3 2.7 3 6 3h15z" fill="#8aabcc" stroke="#5a7a9a" stroke-width="0.8"/>
-                  <path d="M22 32 l-3 6" stroke="#c9a020" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M27 30 l-4 8" stroke="#c9a020" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M32 32 l-3 6" stroke="#c9a020" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M20 40 l-1 3M28 38 l-1 3M25 42 l-1 3" stroke="#6aaadd" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-                <div>
-                  <div class="weather-temp">26° – 30°C</div>
-                  <div class="weather-desc">Có thể có giông bão</div>
-                </div>
-                <div class="weather-stats">
-                  <div class="weather-stat">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4a90c4" stroke-width="2" stroke-linecap="round"><path d="M12 2 Q12 8 12 14 Q12 20 12 22"/><path d="M8 18 Q10 22 12 22 Q14 22 16 18"/></svg>
-                    <span class="wlabel">Mưa</span> 59%
-                  </div>
-                  <div class="weather-stat">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a020" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                    <span class="wlabel">UV</span> Vừa
-                  </div>
-                  <div class="weather-stat">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7ab88a" stroke-width="2" stroke-linecap="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 10 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
-                    <span class="wlabel">Gió</span> 15 km/h
-                  </div>
-                  <div class="weather-stat">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4a90c4" stroke-width="2" stroke-linecap="round"><path d="M12 2 C8 8 5 12 5 15.5 A7 7 0 0 0 19 15.5 C19 12 16 8 12 2z"/></svg>
-                    <span class="wlabel">Ẩm</span> 78%
-                  </div>
-                </div>
-              </div>
-              <div class="weather-divider"></div>
-              <div class="weather-tips">◆ &nbsp; Lưu ý khi tham dự &nbsp; ◆</div>
-              <div class="weather-tip-row">
-                <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
-                Mặc trang phục nhẹ, thoáng mát
-              </div>
-              <div class="weather-tip-row">
-                <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 12a11.05 11.05 0 0 0-22 0zm-5 7a3 3 0 0 1-6 0v-7"/></svg>
-                Nhớ mang theo ô phòng mưa
-              </div>
-              <div class="weather-tip-row">
-                <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-                Thoa kem chống nắng trước khi đi
+            <div class="weather-body" id="weather-body">
+              <div style="text-align:center; padding: 24px 0; color:#9a7020; font-family:'Cormorant Garamond',serif; font-size:14px; font-style:italic;">
+                Đang tải thời tiết...
               </div>
             </div>
           </div>
@@ -810,5 +767,91 @@
   </div>
 </div>
 
+<script>
+(async function() {
+  const LAT = 20.9653, LON = 105.7838;
+  const DATE = '2026-05-17';
+
+  const iconSVG = {
+    sun: `<svg class="weather-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="9" fill="#f0c040" stroke="#c9a020" stroke-width="1.5"/><g stroke="#c9a020" stroke-width="1.5" stroke-linecap="round"><line x1="24" y1="6" x2="24" y2="10"/><line x1="24" y1="38" x2="24" y2="42"/><line x1="6" y1="24" x2="10" y2="24"/><line x1="38" y1="24" x2="42" y2="24"/><line x1="11.5" y1="11.5" x2="14.3" y2="14.3"/><line x1="33.7" y1="33.7" x2="36.5" y2="36.5"/><line x1="36.5" y1="11.5" x2="33.7" y2="14.3"/><line x1="14.3" y1="33.7" x2="11.5" y2="36.5"/></g></svg>`,
+    cloud: `<svg class="weather-icon" viewBox="0 0 48 48" fill="none"><path d="M34 30c3.3 0 6-2.7 6-6s-2.7-6-6-6c-.4 0-.8 0-1.2.1C31.5 15.2 28.5 13 25 13c-4.4 0-8 3.6-8 8 0 .3 0 .6.1.9C14.7 22.5 13 24.6 13 27c0 1.7 1.3 3 3 3h18z" fill="#b0c8e0" stroke="#8aabcc" stroke-width="1"/></svg>`,
+    rain: `<svg class="weather-icon" viewBox="0 0 48 48" fill="none"><path d="M34 26c3.3 0 6-2.7 6-6s-2.7-6-6-6c-.4 0-.8 0-1.2.1C31.5 11.2 28.5 9 25 9c-4.4 0-8 3.6-8 8 0 .3 0 .6.1.9C14.7 18.5 13 20.6 13 23c0 1.7 1.3 3 3 3h18z" fill="#8aabcc" stroke="#5a7a9a" stroke-width="1"/><g stroke="#4a90c4" stroke-width="1.8" stroke-linecap="round"><line x1="18" y1="32" x2="16" y2="38"/><line x1="24" y1="32" x2="22" y2="38"/><line x1="30" y1="32" x2="28" y2="38"/></g></svg>`,
+    storm: `<svg class="weather-icon" viewBox="0 0 48 48" fill="none"><path d="M34 26c3.3 0 6-2.7 6-6s-2.7-6-6-6c-.4 0-.8 0-1.2.1C31.5 11.2 28.5 9 25 9c-4.4 0-8 3.6-8 8 0 .3 0 .6.1.9C14.7 18.5 13 20.6 13 23c0 1.7 1.3 3 3 3h18z" fill="#7090aa" stroke="#5a7a9a" stroke-width="1"/><polyline points="26,28 22,35 26,35 21,43" stroke="#c9a020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><g stroke="#4a90c4" stroke-width="1.5" stroke-linecap="round"><line x1="32" y1="30" x2="30" y2="36"/><line x1="18" y1="30" x2="16" y2="36"/></g></svg>`,
+    partcloud: `<svg class="weather-icon" viewBox="0 0 48 48" fill="none"><circle cx="20" cy="20" r="8" fill="#f0c040" stroke="#c9a020" stroke-width="1.2"/><path d="M36 34c2.8 0 5-2.2 5-5s-2.2-5-5-5h-.8C34 21.2 31.5 19 28.5 19c-3.6 0-6.5 2.9-6.5 6.5 0 .2 0 .4.1.6C19.8 26.6 18 28.3 18 30.5c0 1.9 1.6 3.5 3.5 3.5H36z" fill="#b0c8e0" stroke="#8aabcc" stroke-width="1"/></svg>`
+  };
+
+  function getWeatherInfo(code, rain, wind) {
+    let icon, desc, tips = [];
+    if (code <= 1) { icon = 'sun'; desc = 'Nắng đẹp, trời quang'; }
+    else if (code <= 3) { icon = 'partcloud'; desc = 'Nhiều mây, nắng nhẹ'; }
+    else if (code <= 49) { icon = 'cloud'; desc = 'Trời nhiều mây'; }
+    else if (code <= 67) { icon = 'rain'; desc = 'Có mưa'; }
+    else if (code <= 82) { icon = 'rain'; desc = 'Mưa rào'; }
+    else { icon = 'storm'; desc = 'Có thể có giông bão'; }
+
+    if (rain > 50) tips.push({ svg: `<svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 12a11.05 11.05 0 0 0-22 0zm-5 7a3 3 0 0 1-6 0v-7"/></svg>`, text: 'Nhớ mang theo ô — khả năng mưa cao' });
+    if (rain <= 30) tips.push({ svg: `<svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>`, text: 'Thoa kem chống nắng trước khi đi' });
+    if (wind > 20) tips.push({ svg: `<svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 10 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`, text: 'Gió to — tránh mặc váy rộng, đồ dễ bay' });
+    tips.push({ svg: `<svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>`, text: 'Mặc trang phục nhẹ, lịch sự, thoáng mát' });
+    tips.push({ svg: `<svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 C8 8 5 12 5 15.5 A7 7 0 0 0 19 15.5 C19 12 16 8 12 2z"/></svg>`, text: 'Mang nước uống — trời có thể nóng bức' });
+
+    return { icon, desc, tips };
+  }
+
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,windspeed_10m_max,uv_index_max,relative_humidity_2m_max&timezone=Asia%2FBangkok&start_date=${DATE}&end_date=${DATE}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const d = data.daily;
+
+    const code = d.weathercode[0];
+    const tmax = Math.round(d.temperature_2m_max[0]);
+    const tmin = Math.round(d.temperature_2m_min[0]);
+    const rain = Math.round(d.precipitation_probability_max[0]);
+    const wind = Math.round(d.windspeed_10m_max[0]);
+    const uv = Math.round(d.uv_index_max[0]);
+    const hum = Math.round(d.relative_humidity_2m_max[0]);
+
+    const { icon, desc, tips } = getWeatherInfo(code, rain, wind);
+    const uvLabel = uv <= 2 ? 'Thấp' : uv <= 5 ? 'Vừa' : uv <= 7 ? 'Cao' : 'Rất cao';
+
+    document.getElementById('weather-body').innerHTML = `
+      <div class="weather-main">
+        ${iconSVG[icon]}
+        <div>
+          <div class="weather-temp">${tmin}° – ${tmax}°C</div>
+          <div class="weather-desc">${desc}</div>
+        </div>
+        <div class="weather-stats">
+          <div class="weather-stat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4a90c4" stroke-width="2" stroke-linecap="round"><path d="M12 2 C8 8 5 12 5 15.5 A7 7 0 0 0 19 15.5 C19 12 16 8 12 2z"/></svg>
+            <span class="wlabel">Mưa</span> ${rain}%
+          </div>
+          <div class="weather-stat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a020" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <span class="wlabel">UV</span> ${uvLabel}
+          </div>
+          <div class="weather-stat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7ab88a" stroke-width="2" stroke-linecap="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 10 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+            <span class="wlabel">Gió</span> ${wind} km/h
+          </div>
+          <div class="weather-stat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4a90c4" stroke-width="2" stroke-linecap="round"><path d="M12 2 Q12 8 12 14 Q12 20 12 22"/><path d="M8 18 Q10 22 12 22 Q14 22 16 18"/></svg>
+            <span class="wlabel">Ẩm</span> ${hum}%
+          </div>
+        </div>
+      </div>
+      <div class="weather-divider"></div>
+      <div class="weather-tips">◆ &nbsp; Gợi ý trang phục &nbsp; ◆</div>
+      ${tips.map(t => `<div class="weather-tip-row">${t.svg} ${t.text}</div>`).join('')}
+    `;
+  } catch(e) {
+    document.getElementById('weather-body').innerHTML = `
+      <div style="text-align:center; padding:16px; color:#9a7020; font-family:'Cormorant Garamond',serif; font-size:13px; font-style:italic;">
+        Không thể tải thời tiết. Vui lòng kiểm tra kết nối mạng.
+      </div>`;
+  }
+})();
+</script>
 </body>
 </html>
